@@ -1,6 +1,9 @@
 #include <GL/glut.h>
 #include<math.h>
 #define PI 3.1415927
+
+
+
 void sin(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
