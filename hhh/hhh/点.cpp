@@ -19,7 +19,7 @@ void sin(void)
 	glFlush();
 }
 
-int main(int argc, char *argv[])
+int rrrmain(int argc, char *argv[])
 {
 	glutInit(&argc, argv);
 	

@@ -18,5 +18,11 @@
     <ClCompile Include="点.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="sound.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="luatest.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
