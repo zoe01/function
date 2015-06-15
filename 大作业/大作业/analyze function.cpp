@@ -9,8 +9,8 @@ extern "C" {
 using namespace std;
 typedef struct points
 {
-	long x;
-	long y;
+	double x;
+	double y;
 }point;
 int findsub(char *a, char *b)
 {
@@ -66,11 +66,11 @@ void TranFunction(char *fun)
 	replace_str(fun, "acos", "math.acos");
 	replace_str(fun, "atan", "math.atan");
 }
-int analyzeFunction(point *dot)
+point* analyzeFunction()
 //int main()
 {
-	int size;
-	//point *dot;
+	long size;
+	point *dot;
 	char *lua1 =
 		"a={}\n b={}\n"
 		"i=0\n"
@@ -83,11 +83,11 @@ int analyzeFunction(point *dot)
 		"end\n";
 	char lua[1000];
 
-	double x1 = 0, x2 = 20;
+	double x1, x2;
 	printf("Input the range of x:");
 	scanf("%lf %lf", &x1, &x2);
 
-	double step = 1;
+	double step;
 	printf("Input the step of x:");
 	scanf("%lf", &step);
 
@@ -113,7 +113,7 @@ int analyzeFunction(point *dot)
 	printf("Input the function:");
 	fflush(stdin);
 	fgets(fun, sizeof(fun), stdin);
-		TranFunction(fun);
+	TranFunction(fun);
 	sprintf(lua, "%s%s%s", lua1, fun, lua2);
 	//执行
 	error = luaL_loadbuffer(L, lua, strlen(lua), "line") ||
@@ -127,7 +127,8 @@ int analyzeFunction(point *dot)
 		lua_getglobal(L, "a");
 		size = luaL_len(L, -1);//相关于#table
 		dot = (point *)malloc((size)*sizeof(point)); //
-		int a = 0;
+		dot[0].x = dot[0].y = size;         //dot[0].x.y接收点的个数，点坐标从下标1开始记录
+		int a = 1;
 		for (int i = 1; i <= size; i++)
 		{
 			lua_pushnumber(L, i);
@@ -138,7 +139,7 @@ int analyzeFunction(point *dot)
 			lua_pop(L, 1);//把栈顶的值移出栈，保证栈顶是table以便遍历。
 		}
 		lua_getglobal(L, "b");
-		int b = 0;
+		int b = 1;
 		for (int i = 1; i <= size; i++)
 		{
 			lua_pushnumber(L, i);
@@ -150,5 +151,5 @@ int analyzeFunction(point *dot)
 		}
 	}
 	lua_close(L);
-	return size;
+	return dot;
 }

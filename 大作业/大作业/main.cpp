@@ -1,19 +1,20 @@
 #include<stdio.h>
 #include <stdlib.h>
+
 typedef struct points
 {
-	long x;
-	long y;
+	double x;
+	double y;
 }point;
-extern int analyzeFunction(point *dot);
+extern point* analyzeFunction();
 
 int main()
 {
 	point *dot = 0;
-	int size=analyzeFunction(dot);
+	dot = analyzeFunction();
 	int i;
-	for (i = 0; i < size; i++){
-		printf("%ld %ld", dot[i].x, dot[i].y);
+	for (i = 1; i <= dot[0].x; i++){
+		printf("%lf %lf\n", dot[i].x, dot[i].y);
 	}
 	free;
 	return 0;
