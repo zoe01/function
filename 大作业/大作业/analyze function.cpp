@@ -69,17 +69,17 @@ int main()
 			point *dot;
 			lua_getglobal(L, "a");
 			int size = luaL_len(L, -1);//相关于#table
+			dot = (point *)malloc((size)*sizeof(long));
 			int a = 0;
 			for (int i = 1; i <= size; i++)
 			{
 				lua_pushnumber(L, i);
 				lua_gettable(L, -2);
-				dot = (point *)malloc((a+1)*sizeof(long));
 				dot[a].x = lua_tonumber(L, -1);
 				a++;
 				//这时table[i]的值在栈顶了
 				lua_pop(L, 1);//把栈顶的值移出栈，保证栈顶是table以便遍历。
-			}		
+			}
 			lua_getglobal(L, "b");
 			int b = 0;
 			for (int i = 1; i <= size; i++)
