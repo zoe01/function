@@ -73,7 +73,7 @@ point* analyzeFunction()
 	point *dot;
 	char *lua1 =
 		"a={}\n b={}\n"
-		"i=0\n"
+		"i=1\n"   //lua从1开始计数
 		"for x=x1,x2,step do\n";
 	//"y=f\n"
 	char *lua2 =
