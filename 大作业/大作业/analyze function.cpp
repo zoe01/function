@@ -16,7 +16,7 @@ int findsub(char *a, char *b)
 {
 	int i, j, k;
 	for (i = 0; a[i] != '\0'; i++){
-		for (j = i, k = 0; a[j] == b[k] && k<strlen(b); j++, k++);
+		for (j = i, k = 0; a[j] == b[k] && k < strlen(b); j++, k++);
 		if (b[k] == '\0')
 			return i;
 	}
@@ -108,46 +108,45 @@ int analyzeFunction(point *dot)
 	lua_setglobal(L, "step");
 
 	char fun[256];// = { "y=x*x\n" };
-	
+
 	int error;
 	printf("Input the function:");
 	fflush(stdin);
-	while (fgets(fun, sizeof(fun), stdin) != NULL) {
+	fgets(fun, sizeof(fun), stdin);
 		TranFunction(fun);
-		sprintf(lua, "%s%s%s", lua1, fun, lua2);
-		//执行
-		error = luaL_loadbuffer(L, lua, strlen(lua), "line") ||
-			lua_pcall(L, 0, 0, 0);
-		if (error) {
-			fprintf(stderr, "%s", lua_tostring(L, -1));
-			lua_pop(L, 1);  /* pop error message from the stack */
+	sprintf(lua, "%s%s%s", lua1, fun, lua2);
+	//执行
+	error = luaL_loadbuffer(L, lua, strlen(lua), "line") ||
+		lua_pcall(L, 0, 0, 0);
+	if (error) {
+		fprintf(stderr, "%s", lua_tostring(L, -1));
+		lua_pop(L, 1);  /* pop error message from the stack */
+	}
+	else{
+		//从lua中获得坐标数组
+		lua_getglobal(L, "a");
+		size = luaL_len(L, -1);//相关于#table
+		dot = (point *)malloc((size)*sizeof(point)); //
+		int a = 0;
+		for (int i = 1; i <= size; i++)
+		{
+			lua_pushnumber(L, i);
+			lua_gettable(L, -2);
+			dot[a].x = lua_tonumber(L, -1);
+			a++;
+			//这时table[i]的值在栈顶了
+			lua_pop(L, 1);//把栈顶的值移出栈，保证栈顶是table以便遍历。
 		}
-		else{
-			//从lua中获得坐标数组
-			lua_getglobal(L, "a");
-			size = luaL_len(L, -1);//相关于#table
-			dot = (point *)malloc((size)*sizeof(point)); //
-			int a = 0;
-			for (int i = 1; i <= size; i++)
-			{
-				lua_pushnumber(L, i);
-				lua_gettable(L, -2);
-				dot[a].x = lua_tonumber(L, -1);
-				a++;
-				//这时table[i]的值在栈顶了
-				lua_pop(L, 1);//把栈顶的值移出栈，保证栈顶是table以便遍历。
-			}
-			lua_getglobal(L, "b");
-			int b = 0;
-			for (int i = 1; i <= size; i++)
-			{
-				lua_pushnumber(L, i);
-				lua_gettable(L, -2);
-				dot[b].y = lua_tonumber(L, -1);
-				b++;
-				//这时table[i]的值在栈顶了
-				lua_pop(L, 1);//把栈顶的值移出栈，保证栈顶是table以便遍历。
-			}
+		lua_getglobal(L, "b");
+		int b = 0;
+		for (int i = 1; i <= size; i++)
+		{
+			lua_pushnumber(L, i);
+			lua_gettable(L, -2);
+			dot[b].y = lua_tonumber(L, -1);
+			b++;
+			//这时table[i]的值在栈顶了
+			lua_pop(L, 1);//把栈顶的值移出栈，保证栈顶是table以便遍历。
 		}
 	}
 	lua_close(L);
