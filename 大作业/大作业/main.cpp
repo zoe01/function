@@ -8,14 +8,36 @@ typedef struct points
 }point;
 extern point* analyzeFunction();
 
+point *dot;
 
-
-void sin()
+//void changeSize(int w, int h) {
+//
+//	// Prevent a divide by zero, when window is too short
+//	// (you cant make a window of zero width).
+//	if (h == 0)
+//		h = 1;
+//	float ratio = w * 1.0 / h;
+//	// Use the Projection Matrix
+//	glMatrixMode(GL_PROJECTION);
+//
+//	// Reset Matrix
+//	glLoadIdentity();
+//
+//	// Set the viewport to be the entire window
+//	glViewport(0, 0, w, h);
+//
+//	// Set the correct perspective.
+//	gluPerspective(45, ratio, 1, 100);
+//
+//	// Get Back to the Modelview
+//	glMatrixMode(GL_MODELVIEW);
+//}
+void func()
 {
-	point *dot;
-	dot = analyzeFunction();
+	
+	//dot = analyzeFunction();
 	glClear(GL_COLOR_BUFFER_BIT);
-	//glScalef(0.003f, 1.0f, 1.0f);//缩放
+	glScalef(0.01f, 0.001f, 1.0f);//缩放
 	glBegin(GL_LINE_STRIP /* 在这里填上你所希望的模式 */);
 	for (int i = 1; i <= dot[0].x; i++){
 		//printf("%lf %lf\n", dot[i].x, dot[i].y);
@@ -30,19 +52,17 @@ void sin()
 }
 int main(int argc, char *argv[])
 {
-	//point *dot;
-	//dot = analyzeFunction();
-	/*int i;
-	for (i = 1; i <= dot[0].x; i++){
-		printf("%lf %lf\n", dot[i].x, dot[i].y);
-	}*/
+	dot = analyzeFunction();
 	glutInit(&argc, argv);
 
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(400, 400);
 	glutCreateWindow("glBegin");
-	glutDisplayFunc(sin);
+	
+	glutDisplayFunc(func);
+	//glutReshapeFunc(changeSize);
+
 	glutMainLoop();
 	return 0;
 }
