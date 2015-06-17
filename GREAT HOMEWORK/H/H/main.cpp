@@ -10,11 +10,10 @@
 #include<conio.h>
 #include<locale.h>
 
-#pragma comment(lib,"WinMM.lib");
+#pragma comment(lib,"WinMM.Lib");
 #define WDIS 440
 MOUSEMSG m;
 extern HWND hwnd;
-extern HMODULE hmod;
 
 int mainmenu();
 void display1();
@@ -23,34 +22,32 @@ void settings();
 void loadmusic();
 void closemusic();
 
+//主页菜单
 int MainMenu(){
 	int i = 1, y1 = 250;
 
-	//initgraph(1000, 600);
 	cleardevice();
 	IMAGE img;
 
 	loadimage(&img, "1.jpg", 1000, 600, true);
 	putimage(0, 0, &img);
+
+	//设置主菜单文字
 	setlocale(LC_ALL, "chs");//解决中文乱码，在头文件locale.h中
 	settextstyle(80, 0, "华文彩云",0,0,10000,0,0,0);
 	settextcolor(MAGENTA);
 	setbkmode(TRANSPARENT);/*处理文字后面的黑色，使文字后的背景为图片*/
 	outtextxy(400, 150, "菜单");
-
-	
-
 	
 	settextcolor(DARKGRAY);
-	settextstyle(40, 0, "幼圆",0,0,1000,0,1,0);
-	
+	settextstyle(40, 0, "幼圆",0,0,1000,0,1,0);	
 	int WIDTH = textwidth(_T("1 画图"));
 	outtextxy(WDIS, 250, _T("1 画图"));
 	outtextxy(WDIS, 300, _T("2 分形"));
 	outtextxy(WDIS, 350, _T("3 配置"));
 	outtextxy(WDIS, 400, _T("4 退出"));
 	
-
+	//获取鼠标信息
 	FlushMouseMsgBuffer();
 	while (true){
 		if (MouseHit()){   //检测
@@ -64,10 +61,10 @@ int MainMenu(){
 					else
 						y1 += 50, i++;
 				}
-			}
-			
+			}		
 
 		}
+		//通过按键也可以实现主菜单跳转
 		if (_kbhit()){
 			char c = _getch();
 			if (c >= '1'&&c <= '4')
@@ -79,6 +76,7 @@ int MainMenu(){
 
 }
 
+//主页
 void MainPage(){
 	setcliprgn(NULL);
 	int choose = 0;
@@ -94,10 +92,14 @@ void MainPage(){
 	_getch();
 }
 
+//主函数
 void main(void){	
 	initgraph(1000, 600);
 	loadmusic();
+
+	//插入主背景音乐
 	mciSendString("play d repeat", NULL, 0, NULL);
+
 	MainPage();	
 	_getch();
 	return ;

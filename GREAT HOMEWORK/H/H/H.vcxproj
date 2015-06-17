@@ -14,9 +14,12 @@
     <ClCompile Include="analyze function.cpp" />
     <ClCompile Include="display1.cpp" />
     <ClCompile Include="display2.cpp" />
+    <ClCompile Include="Hilbert.cpp" />
+    <ClCompile Include="Julia Set.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OP.cpp" />
     <ClCompile Include="settings.cpp" />
+    <ClCompile Include="Sierpinski.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\lauxlib.h" />

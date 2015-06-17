@@ -99,15 +99,9 @@ int SubMenu1(){
 	closegraph();
 
 }
-
-
-
-
 void display1()
 {
 	int choose = 0;
-	
-	
 	choose = SubMenu1();
 	switch (choose){
 	case 1:display1(); break;
@@ -119,5 +113,4 @@ void display1()
 	}
 	_getch();
 	return ;
-
 }

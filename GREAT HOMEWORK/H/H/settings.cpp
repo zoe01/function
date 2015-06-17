@@ -10,18 +10,17 @@
 #include<conio.h>
 #include<locale.h>
 
-
+#pragma comment(lib,"WinMM.Lib")
 #define WDIS 900
 #define WDIS2 300
 MOUSEMSG s;
 extern HWND hwnd;
-extern HMODULE hmod;
 
-
+void MainPage();
 void display1();
 void display2();
-void MainPage();
 
+//加载音乐
 void loadmusic(){
 	mciSendString(TEXT("open lvdvo.mp3 alias a"), NULL, 0, NULL);
 	mciSendString(TEXT("open 菊次郎的夏天.mp3 alias b"), NULL, 0, NULL);
@@ -35,6 +34,7 @@ void loadmusic(){
 
 }
 
+//音乐播放停止
 void stopmusic(){
 	mciSendString("stop a", NULL, 0, NULL);
 	mciSendString("stop b", NULL, 0, NULL);
@@ -46,6 +46,7 @@ void stopmusic(){
 	mciSendString("stop h", NULL, 0, NULL);
 }
 
+//关闭音乐
 void closemusic(){
 	mciSendString("close a", NULL, 0, NULL);
 	mciSendString("close b", NULL, 0, NULL);
@@ -57,7 +58,7 @@ void closemusic(){
 	mciSendString("close h", NULL, 0, NULL);
 }
 
-
+//“配置”选项的菜单
 int SubMenu3(){
 	int i = 1, j = 4, y1 = 250, y2 = 150;
 	cleardevice();
@@ -70,6 +71,8 @@ int SubMenu3(){
 	settextstyle(40, 0, "幼圆", 0, 0, 10000, 0, 0, 0);
 	settextcolor(WHITE);
 	setbkmode(TRANSPARENT);/*处理文字后面的黑色，使文字后的背景为图片*/
+
+	//设定菜单文字
 	outtextxy(WDIS, 150, "菜单");
 	settextcolor(WHITE);
 	settextstyle(30, 0, "幼圆", 0, 0, 1000, 0, 1, 0);
@@ -78,13 +81,16 @@ int SubMenu3(){
 	outtextxy(WDIS, 300, _T("2 分形"));
 	outtextxy(WDIS, 350, _T("3 菜单"));
 
+	//设定信息文字
 	settextcolor(MAGENTA);
 	settextstyle(30, 0, "华文行楷", 0, 0, 10000, 0, 0, 0);
-	outtextxy(50, 400, _T("张宁怡"));
-	outtextxy(50, 450, _T("赵彤"));
-	outtextxy(50, 500, _T("王靖宇"));
-	outtextxy(50, 550, _T("倾情奉献"));
+	outtextxy(50, 450, _T("141279044 张宁怡"));
+	outtextxy(480, 520, _T("张宁怡 QQ 570364097 欢迎骚扰"));
+	outtextxy(50, 500, _T("141279049 赵彤"));
+	outtextxy(50, 550, _T("141279032 王靖宇"));
+	outtextxy(550, 550, _T("工程管理学院 倾情奉献"));
 
+	//设置背景音乐文字
 	setlocale(LC_ALL, "chs");
 	settextstyle(80, 0, "方正姚体", 0, 0, 10000, 0, 0, 0);
 	settextcolor(LIGHTBLUE);
@@ -101,14 +107,14 @@ int SubMenu3(){
 	outtextxy(300, 450, _T("微光角落"));
 	outtextxy(300, 500, _T("Snow Dream"));
 	outtextxy(300, 550, _T("关闭音乐"));
-
+	
+	//获取鼠标信息
 	FlushMouseMsgBuffer();
 	while (true){
 		if (MouseHit()){   //检测
 			s = GetMouseMsg();//获取鼠标状态
 			if (s.uMsg == WM_LBUTTONDOWN){
-				//while (s.x >= WDIS&&s.x <= WIDTH + WDIS&&s.y >= 250 && s.y <= 375 )
-					//s.x >= WDIS2&&s.x <= WIDTH2 + WDIS2&&s.y >= 150 && s.y <= 525)
+				
 					while (s.x >= WDIS&&s.x <= WIDTH + WDIS&&s.y >= 250 && s.y <= 375){
 						if (s.y >= y1&&s.y <= 25 + y1)
 							return i;
@@ -136,6 +142,8 @@ int SubMenu3(){
 					while (s.x >= WDIS2&&s.x <= textwidth(_T("关闭音乐")) + WDIS2&&s.y >= 550 && s.y <= 575)
 						return 12;
 			}
+
+			//同样可以通过按键实现主菜单跳转
 			if (_kbhit()){
 				char c = _getch();
 				if (c >= '1'&&c <= '3')
@@ -147,7 +155,7 @@ int SubMenu3(){
 }
 
 
-
+//“配置”页的函数
 void settings(){
 
 	setcliprgn(NULL);

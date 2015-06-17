@@ -25,10 +25,11 @@ typedef struct points
 }point;
 extern point* analyzeFunction(double x1, double x2, double step, char*fun);
 point* dot;
+point max;
 
-point changesize(point *dot, double n){
-	int i, j=0;
-	double s=dot[1].x, t=dot[1].y;
+point zoom(point *dot, double n){
+	int i, j = 0;
+	double s = dot[1].x, t = dot[1].y;
 	point max;
 	for (i = 1; i <= n; i++){
 		for (j = i + 1; j < n; j++){
@@ -49,11 +50,54 @@ point changesize(point *dot, double n){
 	max.x = fabs(s), max.y = fabs(t);
 	return max;
 }
+
+
+void changeSize(int w, int h)
+{
+	if (h == 0)
+		h = 1;
+	float ratio = w * 1.0 / h;
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glViewport(0, 0, w, h);
+	gluPerspective(45, ratio, 1, 10);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(0.0, 0.0, 3.0, 0.0, 0.0, -1.0, 0.0f, 1.0f, 0.0f);
+}
+
 void func()
 {
-	point max = changesize(dot, dot[0].x);
+	max = zoom(dot, dot[0].x);
 	glClear(GL_COLOR_BUFFER_BIT);
-	glScalef((1.0/max.x), (1.0/max.y), 1.0f);//缩放
+	glScalef((1.0 / max.x), (1.0 / max.y), 1.0f);//缩放
+
+	glBegin(GL_LINES);
+	glVertex2f(-(max.x), 0);
+	glVertex2f(max.x, 0);
+	glEnd();
+	glFlush();
+
+	glBegin(GL_LINE_STRIP);
+	glVertex2f(0.95*max.x, 0.05*max.y);
+	glVertex2f(max.x, 0);
+	glVertex2f(0.95*max.x, -0.05*max.y);
+	glEnd();
+	glFlush();
+
+	glBegin(GL_LINES);
+	glVertex2f(0, max.y);
+	glVertex2f(0, -(max.y));
+	glEnd();
+	glFlush();
+
+	glBegin(GL_LINE_STRIP);
+	glVertex2f(0.05*max.x, 0.95*max.y);
+	glVertex2f(0, max.y);
+	glVertex2f(-0.05*max.x, 0.95*max.y);
+	glEnd();
+	glFlush();
+
 	glBegin(GL_LINE_STRIP /* 在这里填上你所希望的模式 */);
 	for (int i = 1; i <= dot[0].x; i++){
 		glVertex2f(dot[i].x, dot[i].y);
@@ -64,7 +108,6 @@ void func()
 void mymenu(int value){
 	if (value == 1)
 	{
-
 		HWND s = FindWindow(NULL, "神秘之旅");
 		DestroyWindow(s);
 		display1();
@@ -91,12 +134,24 @@ void botton(){
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(500, 500);
 	glutCreateWindow("神秘之旅");
+	glutDisplayFunc(func);
+	
+	glutReshapeFunc(changeSize);
+	HWND hWnd = ::FindWindow(NULL, "神秘之旅");
+	HINSTANCE hInstance;
 
+	HWND funcname = ::CreateWindowA("Static", "", WS_CHILD | WS_VISIBLE | WS_HSCROLL, 0, 0, 200, 35, hWnd, NULL, NULL, NULL);
+	//创建编辑框，hWnd是父窗口句柄,hInstance是程序句柄 
+
+	ShowWindow(funcname, SW_SHOW);
+	//显示编辑框 
+
+	::SetWindowText(funcname, fun);
+
+	
 	glutCreateMenu(mymenu);
 	glutAddMenuEntry("关闭", 1);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
-	glutDisplayFunc(func);
-	//glutReshapeFunc(changeSize);
 	glutMainLoop();
 }

@@ -33,6 +33,15 @@
     <ClCompile Include="display1.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Hilbert.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Julia Set.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Sierpinski.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\lauxlib.h">

@@ -66,7 +66,7 @@ void TranFunction(char *fun)
 	replace_str(fun, "tan", "math.tan");
 	replace_str(fun, "asn", "math.asin");
 	replace_str(fun, "acs", "math.acos");
-	replace_str(fun, "atn", "math.atan");
+	replace_str(fun, "atg", "math.atan");
 }
 point* analyzeFunction(double x1,double x2,double step,char*fun)
 
@@ -84,14 +84,6 @@ point* analyzeFunction(double x1,double x2,double step,char*fun)
 		"i=i+1\n"
 		"end\n";
 	char lua[1000];
-
-	//double x1, x2;
-	//printf("Input the range of x:");
-	//scanf("%lf %lf", &x1, &x2);
-
-	//double step;
-	//printf("Input the step of x:");
-	//scanf("%lf", &step);
 
 	lua_State *L = luaL_newstate();
 	luaL_openlibs(L);
@@ -112,9 +104,6 @@ point* analyzeFunction(double x1,double x2,double step,char*fun)
 	//char fun[256];// = { "y=x*x\n" };
 
 	int error;
-	//printf("Input the function:");
-	//fflush(stdin);
-	//fgets(fun, sizeof(fun), stdin);
 	char fun2[100];
 	strcpy_s(fun2, fun);
 	TranFunction(fun2);
