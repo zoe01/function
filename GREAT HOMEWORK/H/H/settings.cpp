@@ -1,11 +1,4 @@
-﻿#include<stdio.h>
-#include<stdlib.h>
-#include<cstdlib>
-#include<tchar.h>
-#include <ctime>
-#include<windows.h>
-#include<mmsystem.h>
-#include<graphics.h>
+﻿#include<cstdlib>
 #include<easyx.h>
 #include<conio.h>
 #include<locale.h>
@@ -30,8 +23,6 @@ void loadmusic(){
 	mciSendString(TEXT("open 天空之城.mp3 alias f"), NULL, 0, NULL);
 	mciSendString(TEXT("open 微光角落.mp3 alias g"), NULL, 0, NULL);	
 	mciSendString(TEXT("open sd.mp3 alias h"), NULL, 0, NULL);	
-
-
 }
 
 //音乐播放停止
@@ -177,8 +168,6 @@ void settings(){
 	case 12:stopmusic(); settings(); break;
 	default:;
 	}
-
-
 	_getch();
 	return;
 }

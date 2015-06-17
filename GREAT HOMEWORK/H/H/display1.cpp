@@ -1,11 +1,4 @@
 #include<stdio.h>
-#include<stdlib.h>
-#include<cstdlib>
-#include<tchar.h>
-#include <ctime>
-#include<windows.h>
-#include<mmsystem.h>
-#include<graphics.h>
 #include<easyx.h>
 #include<conio.h>
 #include<locale.h>
@@ -25,7 +18,6 @@ int SubMenu1(){
 	FILE *hint,*hintdes;
 	int b1,b2;
 	char line[100],linedes[100];
-	//initgraph(1000, 600);
 	cleardevice();
 	IMAGE img;
 
@@ -39,7 +31,9 @@ int SubMenu1(){
 
 	settextstyle(20, 0, "Buxton Sketch", 0, 0, 8000, 0, 0, 0);
 	settextcolor(LIGHTMAGENTA);
-	outtextxy(20, 20, "HINT!(输入函数时别忘了括号哦~)");
+	outtextxy(20, 20, "HINT!");
+	outtextxy(620, 20, "输入函数时别忘了括号哦~");
+	outtextxy(620, 38, "神秘之旅的正确退出方式是右键哦~");
 	b1 = 50;
 	hint = fopen("hint.txt", "r");
 	while (!feof(hint)){

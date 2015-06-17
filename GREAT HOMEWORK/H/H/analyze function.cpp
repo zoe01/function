@@ -6,8 +6,6 @@ extern "C" {
 
 #include <iostream>
 #include <string>
-
-
 using namespace std;
 typedef struct points
 {
@@ -77,21 +75,19 @@ point* analyzeFunction(double x1,double x2,double step,char*fun)
 		"a={}\n b={}\n"
 		"i=1\n"   //lua从1开始计数
 		"for x=x1,x2,step do\n";
-	//"y=f\n"
 	char *lua2 =
 		"a[i]=x\n b[i]=y\n"
-		"print(a[i],b[i])\n"
 		"i=i+1\n"
 		"end\n";
 	char lua[1000];
 
 	lua_State *L = luaL_newstate();
 	luaL_openlibs(L);
-	luaopen_base(L);             /* opens the basic library */
-	luaopen_table(L);            /* opens the table library */
-	luaopen_io(L);               /* opens the I/O library */
-	luaopen_string(L);           /* opens the string lib. */
-	luaopen_math(L);             /* opens the math lib. */
+	luaopen_base(L);   
+	luaopen_table(L);    
+	luaopen_io(L);             
+	luaopen_string(L);         
+	luaopen_math(L);    
 
 	////把一个数据送给Lua
 	lua_pushnumber(L, x1);
@@ -100,8 +96,6 @@ point* analyzeFunction(double x1,double x2,double step,char*fun)
 	lua_setglobal(L, "x2");
 	lua_pushnumber(L, step);
 	lua_setglobal(L, "step");
-
-	//char fun[256];// = { "y=x*x\n" };
 
 	int error;
 	char fun2[100];

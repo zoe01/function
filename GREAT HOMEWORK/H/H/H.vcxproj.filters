@@ -61,13 +61,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\lib\WinMM (2).Lib">
-      <Filter>源文件</Filter>
-    </Library>
     <Library Include="..\lib\WinMM.Lib">
       <Filter>源文件</Filter>
     </Library>
     <Library Include="..\lib\lua.lib">
+      <Filter>源文件</Filter>
+    </Library>
+    <Library Include="..\lib\WinMM (2).Lib">
       <Filter>源文件</Filter>
     </Library>
   </ItemGroup>

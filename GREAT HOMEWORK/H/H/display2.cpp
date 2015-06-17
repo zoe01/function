@@ -1,11 +1,3 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<cstdlib>
-#include<tchar.h>
-#include <ctime>
-#include<windows.h>
-#include<mmsystem.h>
-#include<graphics.h>
 #include<easyx.h>
 #include<conio.h>
 #include<locale.h>
@@ -126,5 +118,4 @@ void display2(){
 	}
 	_getch();
 	return;
-
 }
